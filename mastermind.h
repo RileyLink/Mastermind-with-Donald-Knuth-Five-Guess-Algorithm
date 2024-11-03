@@ -4,6 +4,7 @@
 
 #ifndef MASTERMIND_H
 #define MASTERMIND_H
+#include <list>
 #include <string>
 
 using namespace std;
@@ -12,26 +13,29 @@ using namespace std;
 
 class mastermind {
 public:
-    void play();
     void instructions();
+
     mastermind();
+    explicit mastermind(int codelength);
+
+    void play();
     void playBruteForce();
     bool playDonaldKnuth();
-
     bool playDonaldKnuthParallel();
 
     int playDonaldKnuth(const string& secretCode);
+
     vector<string> generateCombinations();
-
-
 private:
     int CODELENGTH;
 
     string createSecretCode();
 
-    static string pickGuess(const vector<string>& guesses, vector<string> candidateSolutions, vector<string> combinations);
+    static string pickGuess(const vector<string> &guesses, vector<string> candidateSolutions);
 
     static bool removeCode(vector<string> &v, const string &s);
+
+    static bool removeCode(list<string> &v, const string &s);
 
     string chooseSecretCode();
 

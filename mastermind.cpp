@@ -7,17 +7,22 @@ using namespace std;
 #include <iostream>
 #include <random>
 #include <iomanip>
-#include <stdexcept>
 #include <unordered_map>
 #include <algorithm>
-#include <omp.h>  // Include the OpenMP header
+#include <list>
 #include <chrono>  // for timing
 
 // TODO: Make colors a field probably by just making it an array or vector
+
+//TODO: make template functions and try different data structures for my combos and candidate solutions and time
 const char colors[] = {'R', 'W', 'Y', 'G', 'B', 'K'};
 
 mastermind::mastermind(){
     CODELENGTH = 4;
+}
+
+mastermind::mastermind(int codelength) : CODELENGTH(codelength){
+
 }
 
 // TODO: fix this so you can input length and colors
@@ -114,26 +119,32 @@ string mastermind::createSecretCode() {
     return string(secretCode.begin(),secretCode.end());
 }
 
-string mastermind::pickGuess(const vector<string>& guesses, vector<string> candidateSolutions, vector<string> combinations) {
-    for (string possibleGuess : guesses) {
-        if (find(candidateSolutions.begin(),candidateSolutions.end(),possibleGuess) != candidateSolutions.end()) {
+string mastermind::pickGuess(const vector<string>& guesses, vector<string> candidateSolutions) {
+    // First loop: Find a possible guess in candidateSolutions (now a list)
+    for (const string& possibleGuess : guesses) {
+        if (find(candidateSolutions.begin(), candidateSolutions.end(), possibleGuess) != candidateSolutions.end()) {
             return possibleGuess;
         }
     }
 
-    for (string possibleGuess : guesses) {
-        if (find(combinations.begin(),combinations.end(),possibleGuess) != combinations.end()) {
-            return possibleGuess;
-        }
-    }
-
-    return "ERROR";
+    // Second loop: Find a possible guess in combinations
+    return guesses.at(0);
 }
 
 bool mastermind::removeCode(vector<string>& v, const string& s) {
     auto it = find(v.begin(), v.end(), s); // Search for the string
     if (it != v.end()) {
         v.erase(it);
+        return true; // Indicate successful removal
+    }
+    return false; // Indicate that the string was not found
+}
+
+bool mastermind::removeCode(list<string>& v, const string& s) {
+    // Search for the string in the list
+    auto it = find(v.begin(), v.end(), s);
+    if (it != v.end()) {
+        v.erase(it); // Erase the element
         return true; // Indicate successful removal
     }
     return false; // Indicate that the string was not found
@@ -297,7 +308,9 @@ bool mastermind::playDonaldKnuth() {
 
     auto start = chrono::high_resolution_clock::now();
     vector<string> combinations = generateCombinations(); // All possible guesses
-    vector<string> candidateSolutions = combinations;
+    vector<string> candidateSolutions(combinations.begin(),combinations.end());
+    //vector<string> candidateSolutions = combinations;  //TODO: change to linked list
+    //TODO: Change the fucntions to templates to take any type of container
 
     // Fill with alternating colors to get a balanced first guess
     for (int i = 0; i < CODELENGTH; ++i) {
@@ -306,7 +319,7 @@ bool mastermind::playDonaldKnuth() {
 
     guesses.push_back(currentGuess);
     do {
-        cout << "Candidates left: " << to_string(candidateSolutions.size()) << endl;
+        //cout << "Candidates left: " << to_string(candidateSolutions.size()) << endl;
 
         // 1. Remove current guess from combinations and candidate solutions
         removeCode(combinations,currentGuess);
@@ -339,7 +352,9 @@ bool mastermind::playDonaldKnuth() {
                 string pegScore = score(key, sol);
                 scoreCount[pegScore]++;
             }
-
+            if (key == "KKKB") {
+                cout << "";
+            }
             // find max score
             int max = 0;
             for (const auto& pair : scoreCount) {
@@ -370,7 +385,7 @@ bool mastermind::playDonaldKnuth() {
         }
 
         // 6. Choose next guess by first checking if its in candidate solutions and then combinations
-        currentGuess = pickGuess(minGuesses, candidateSolutions, combinations);
+        currentGuess = pickGuess(minGuesses, candidateSolutions);
 
         guesses.push_back(currentGuess);
 
@@ -383,6 +398,7 @@ bool mastermind::playDonaldKnuth() {
     auto end = chrono::high_resolution_clock::now();
     // Calculate the duration in milliseconds
     chrono::duration<double, milli> duration = end - start;
+
     // Output the elapsed time
     cout << "Function execution time: " << duration.count() << " ms" << endl;
 
@@ -427,7 +443,7 @@ bool mastermind::playDonaldKnuthParallel() {
 
     guesses.push_back(currentGuess);
     do {
-        cout << "Candidates left: " << to_string(candidateSolutions.size()) << endl;
+        //cout << "Candidates left: " << to_string(candidateSolutions.size()) << endl;
 
         // 1. Remove current guess from combinations and candidate solutions
         removeCode(combinations,currentGuess);
@@ -496,7 +512,7 @@ bool mastermind::playDonaldKnuthParallel() {
         }
 
         // 6. Choose next guess by first checking if its in candidate solutions and then combinations
-        currentGuess = pickGuess(minGuesses, candidateSolutions, combinations);
+        currentGuess = pickGuess(minGuesses, candidateSolutions);
 
         guesses.push_back(currentGuess);
 
@@ -595,7 +611,7 @@ int mastermind::playDonaldKnuth(const string& secret) {
         }
 
         // 6. Choose next guess by first checking if its in candidate solutions and then combinations
-        currentGuess = pickGuess(minGuesses, candidateSolutions, combinations);
+        currentGuess = pickGuess(minGuesses, candidateSolutions);
 
         guesses.push_back(currentGuess);
 
