@@ -320,6 +320,7 @@ bool mastermind::playDonaldKnuth() {
     guesses.push_back(currentGuess);
     do {
         //cout << "Candidates left: " << to_string(candidateSolutions.size()) << endl;
+        //ahhhh
 
         // 1. Remove current guess from combinations and candidate solutions
         removeCode(combinations,currentGuess);
