@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(MasterMind main.cpp
         mastermind.cpp
-        mastermind.h)
+        mastermind.h
+        mmTemplate.cpp
+        mmTemplate.h
+)
 
 find_package(OpenMP REQUIRED)
 if(OpenMP_CXX_FOUND)

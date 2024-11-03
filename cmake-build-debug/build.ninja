@@ -61,6 +61,12 @@ build CMakeFiles/MasterMind.dir/mastermind.cpp.obj: CXX_COMPILER__MasterMind_uns
   OBJECT_DIR = CMakeFiles\MasterMind.dir
   OBJECT_FILE_DIR = CMakeFiles\MasterMind.dir
 
+build CMakeFiles/MasterMind.dir/mmTemplate.cpp.obj: CXX_COMPILER__MasterMind_unscanned_Debug C$:/Users/riley/OneDrive/Documents/School/Senior$ Year/First$ Semester/test/MasterMind/mmTemplate.cpp || cmake_object_order_depends_target_MasterMind
+  DEP_FILE = CMakeFiles\MasterMind.dir\mmTemplate.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always -fopenmp
+  OBJECT_DIR = CMakeFiles\MasterMind.dir
+  OBJECT_FILE_DIR = CMakeFiles\MasterMind.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target MasterMind
@@ -69,7 +75,7 @@ build CMakeFiles/MasterMind.dir/mastermind.cpp.obj: CXX_COMPILER__MasterMind_uns
 #############################################
 # Link the executable MasterMind.exe
 
-build MasterMind.exe: CXX_EXECUTABLE_LINKER__MasterMind_Debug CMakeFiles/MasterMind.dir/main.cpp.obj CMakeFiles/MasterMind.dir/mastermind.cpp.obj
+build MasterMind.exe: CXX_EXECUTABLE_LINKER__MasterMind_Debug CMakeFiles/MasterMind.dir/main.cpp.obj CMakeFiles/MasterMind.dir/mastermind.cpp.obj CMakeFiles/MasterMind.dir/mmTemplate.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lgomp  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\MasterMind.dir
