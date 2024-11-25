@@ -52,7 +52,6 @@
 
   <h2>Future Improvements</h2>
   <ul>
-    <li>Allow dynamic input for the length of the code and number of colors</li>
     <li>Implement additional solving algorithms</li>
     <li>Improve the user interface</li>
   </ul>
