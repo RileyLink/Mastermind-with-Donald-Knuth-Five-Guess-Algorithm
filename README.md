@@ -50,7 +50,7 @@
   ./mastermind
   </code></pre>
 
-  <h2>Future Improvements</h2>
+  <h2>Possible Future Improvements</h2>
   <ul>
     <li>Implement additional solving algorithms</li>
     <li>Improve the user interface</li>
