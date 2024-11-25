@@ -545,7 +545,7 @@ private:
 
         auto itg = guesses.begin();
         auto its = scores.begin();
-        
+
         while (itg != guesses.end() && its != scores.end()) {
             cout << setw(colWidth) << left << *itg
                       << setw(colWidth) << left << *its << endl;

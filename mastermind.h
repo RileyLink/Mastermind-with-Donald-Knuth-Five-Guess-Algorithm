@@ -1,7 +1,3 @@
-//
-// Created by riley on 10/7/2024.
-//
-
 #ifndef MASTERMIND_H
 #define MASTERMIND_H
 #include <list>

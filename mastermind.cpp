@@ -1,7 +1,3 @@
-//
-// Created by riley on 10/7/2024.
-//
-
 #include "mastermind.h"
 using namespace std;
 #include <iostream>
@@ -9,12 +5,8 @@ using namespace std;
 #include <iomanip>
 #include <unordered_map>
 #include <algorithm>
-#include <list>
 #include <chrono>  // for timing
 
-// TODO: Make colors a field probably by just making it an array or vector
-
-//TODO: make template functions and try different data structures for my combos and candidate solutions and time
 const char colors[] = {'R', 'W', 'Y', 'G', 'B', 'K'};
 
 mastermind::mastermind(){
@@ -24,11 +16,6 @@ mastermind::mastermind(){
 mastermind::mastermind(int codelength) : CODELENGTH(codelength){
 
 }
-
-// TODO: fix this so you can input length and colors
-// mastermind::mastermind(int codelength, const char colorsArr[]): CODELENGTH(codelength), colors(colorsArr) {
-//
-// }
 
 string mastermind::score(string secretCode, string guess) {
     //converts to vector<char> because I am lazy and didnt change the original code I wrote
@@ -262,6 +249,8 @@ void mastermind::playBruteForce() {
     } else {
         secretCode = createSecretCode();
     }
+
+    auto start = chrono::high_resolution_clock::now();
     vector<string> combinations = generateCombinations();
     string correctScore;
     correctScore.append(CODELENGTH, '@');
@@ -274,8 +263,16 @@ void mastermind::playBruteForce() {
             }
         }
     } catch (const exception&) {
+        // Record end time
+        auto end = chrono::high_resolution_clock::now();
+
         cout << endl;
         cout << "The brute force approach took " << to_string(guesses.size())<< " guesses! Thanks for playing!" << endl;
+
+        // Calculate the duration in milliseconds
+        chrono::duration<double, milli> duration = end - start;
+        // Output the elapsed time
+        cout << "Function execution time: " << duration.count() << " ms" << endl;
     }
 }
 
@@ -309,8 +306,6 @@ bool mastermind::playDonaldKnuth() {
     auto start = chrono::high_resolution_clock::now();
     vector<string> combinations = generateCombinations(); // All possible guesses
     vector<string> candidateSolutions(combinations.begin(),combinations.end());
-    //vector<string> candidateSolutions = combinations;  //TODO: change to linked list
-    //TODO: Change the fucntions to templates to take any type of container
 
     // Fill with alternating colors to get a balanced first guess
     for (int i = 0; i < CODELENGTH; ++i) {
@@ -532,7 +527,7 @@ bool mastermind::playDonaldKnuthParallel() {
 }
 
 int mastermind::playDonaldKnuth(const string& secret) {
-    string secretCode = secret;
+    const string& secretCode = secret;
     string currentGuess;
     vector<string> guesses;
     string currentScore;
