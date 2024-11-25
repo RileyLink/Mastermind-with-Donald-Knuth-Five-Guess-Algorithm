@@ -35,10 +35,10 @@
 
   <h2>Algorithms</h2>
   <h3>Brute Force Algorithm</h3>
-  <p>This algorithm generates all possible combinations of the code and systematically checks each one until it finds the correct secret code. While effective, it can take many guesses depending on the length of the code and the number of colors available.</p>
+  <p>This algorithm generates all possible combinations of the code and systematically checks each one until it finds the correct secret code. While it can be time effective, it can take many guesses depending on the length of the code and the number of colors available.</p>
 
   <h3>Donald Knuth's Algorithm</h3>
-  <p>Donald Knuth's algorithm is an optimized approach that minimizes the number of guesses needed to solve the game. It uses a strategy to prune the search space after each guess, aiming to solve the game in the fewest guesses possible.</p>
+  <p>Donald Knuth's algorithm is an optimized approach that minimizes the number of guesses needed to solve the game. It uses a strategy to prune the search space after each guess, aiming to solve the game in the fewest guesses possible. Note that this implementation is not optimized for speed because I used strings to represent the colors and codes. Thus, by using integers and more optimized data structures, this could be implemented even faster but since it is already relatively quick I chose to keep it in this more readable implementation.</p>
 
   <h2>Installation</h2>
   <p>To run this project, clone the repository and compile the code. Make sure you have a C++ compiler that supports OpenMP.</p>
